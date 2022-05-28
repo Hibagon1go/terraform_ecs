@@ -2,7 +2,7 @@ variable "domain" {
   description = "Route 53 で管理しているドメイン名"
   type        = string
 
-  default = "hbyotto.net" #ここは各自のドメイン名入れる
+  default = "hbyotto.tk" #ここは各自のドメイン名入れる
 }
 
 resource "aws_acm_certificate" "main" {
@@ -21,6 +21,7 @@ data "aws_route53_zone" "main" {
 }
 
 resource "aws_route53_record" "validation" {
+  depends_on = [aws_acm_certificate.main]
   for_each = {
     for dvo in aws_acm_certificate.main.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name

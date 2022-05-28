@@ -37,6 +37,7 @@ resource "aws_lb" "main" {
   subnets         = ["${aws_subnet.public_1a.id}", "${aws_subnet.public_1c.id}", "${aws_subnet.public_1d.id}"]
 }
 
+
 resource "aws_lb_listener" "main" {
   # HTTPでのアクセスを受け付ける
   port     = "80"
@@ -95,6 +96,8 @@ resource "aws_lb_listener_rule" "main" {
 }
 
 resource "aws_lb_listener" "https" {
+  depends_on = [aws_acm_certificate_validation.main]
+
   load_balancer_arn = aws_lb.main.arn
 
   certificate_arn = aws_acm_certificate.main.arn
