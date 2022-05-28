@@ -77,7 +77,9 @@ resource "aws_ecs_service" "main" {
   # 依存関係の記述。
   # "aws_lb_listener_rule.main" リソースの作成が完了するのを待ってから当該リソースの作成を開始する。
   # "depends_on" は "aws_ecs_service" リソース専用のプロパティではなく、Terraformのシンタックスのため他の"resource"でも使用可能
-  depends_on = [aws_lb_listener_rule.main]
+
+  #depends_on = [aws_lb_listener_rule.main]
+  depends_on = [aws_lb_listener_rule.http_to_https]
 
   # 当該ECSサービスを配置するECSクラスターの指定
   cluster = aws_ecs_cluster.main.name

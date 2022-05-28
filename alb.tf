@@ -77,6 +77,7 @@ resource "aws_lb_target_group" "main" {
   }
 }
 
+/* これだと、httpsにリダイレクトするよりも先に、ecsに投げられる
 resource "aws_lb_listener_rule" "main" {
   # ルールを追加するリスナー
   listener_arn = aws_lb_listener.main.arn
@@ -94,6 +95,7 @@ resource "aws_lb_listener_rule" "main" {
     }
   }
 }
+*/
 
 resource "aws_lb_listener" "https" {
   depends_on = [aws_acm_certificate_validation.main]
